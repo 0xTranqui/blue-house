@@ -79,17 +79,17 @@ const ListingPage: NextPage = () => {
       
     console.log("parsed", parsed)
 
-
+    const collectionToMintFrom = parsed && parsed[listingId]?.contract?.address;
     const tokenIdToMint = parsed && parsed[listingId]?.tokenId;
     const userAddress = address ? address : null
 
     const { numMinted, fetchNumMinted } = useNumMinted({
-        collectionAddress: process.env.NEXT_PUBLIC_AP_1155_CONTRACT,
+        collectionAddress: collectionToMintFrom,
         tokenId: tokenIdToMint
     })
 
     const { totalSupply, fetchTotalSupply } = useTotalSupply({
-        collectionAddress: process.env.NEXT_PUBLIC_AP_1155_CONTRACT,
+        collectionAddress: collectionToMintFrom,
         tokenId: tokenIdToMint
     })
 
@@ -111,6 +111,7 @@ const ListingPage: NextPage = () => {
         mintExistingData,
         mintExistingLoading        
     } = useMintExisting({
+        collection: collectionToMintFrom,
         tokenId: tokenIdToMint,
         userAddress: userAddress,
         onSuccessCB: refreshMintData
@@ -128,17 +129,12 @@ const ListingPage: NextPage = () => {
     const svgLoader = () => {
         return (
             <div className="flex flex-row justify-center items-center w-full fill-black ">
-                {/* <img
-                className='fill-black'
-                width="20px"
-                src="../public/SVG-Loaders/svg-loaders/tail-spin.svg"
-                /> */}
-                <svg fill="#fff" width="38" height="20" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+                <svg fill="#0000FF" width="38" height="20" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
-                            <stop stop-color="#fff" stop-opacity="0" offset="0%"/>
-                            <stop stop-color="#fff" stop-opacity=".631" offset="63.146%"/>
-                            <stop stop-color="#fff" offset="100%"/>
+                            <stop stop-color="#0000FF" stop-opacity="0" offset="0%"/>
+                            <stop stop-color="#0000FF" stop-opacity=".631" offset="63.146%"/>
+                            <stop stop-color="#0000FF" offset="100%"/>
                         </linearGradient>
                     </defs>
                     <g fill="none" fill-rule="evenodd">
@@ -152,7 +148,7 @@ const ListingPage: NextPage = () => {
                                     dur="0.9s"
                                     repeatCount="indefinite" />
                             </path>
-                            <circle fill="#fff" cx="36" cy="18" r="1">
+                            <circle fill="#0000FF" cx="36" cy="18" r="1">
                                 <animateTransform
                                     attributeName="transform"
                                     type="rotate"
@@ -192,7 +188,7 @@ const ListingPage: NextPage = () => {
 
     const title = parsed && parsed[listingId]?.title
     const author = parsed && parsed[listingId]?.contract.contractDeployer
-    const resolvedAuthor = useENSResolver({ address: "0x806164c929Ad3A6f4bd70c2370b3Ef36c64dEaa8" })
+    const resolvedAuthor = useENSResolver({ address: author })
     const description = parsed && parsed[listingId]?.description
 
     const convertDate = (date) => {
@@ -218,7 +214,7 @@ const ListingPage: NextPage = () => {
 
     if (!mediaType) {
         return (
-            <div className='text-[14px] flex flex-row flex-wrap  bg-[#FFFFFF] min-h-[100vh] pt-10 pb-[90px] sm:pb-[108px] h-full w-full justify-center sm:justify-start '>
+            <div className='text-white text-[14px] flex flex-row flex-wrap  bg-[#0000ff] min-h-[100vh] pt-10 pb-[90px] sm:pb-[108px] h-full w-full justify-center sm:justify-start '>
             <div className='pt-[80px] sm:pt-[10px] sm:px-[16px]'>
             loading
             <span className="ml-[6px] dot-animation">
@@ -231,8 +227,8 @@ const ListingPage: NextPage = () => {
         )
     } else if (mediaType === 'markdown') {
         return (
-            <div className="text-[14px] flex flex-row flex-wrap  bg-[#FFFFFF] min-h-[100vh] pt-10 pb-[90px] sm:pb-[108px] h-full w-full justify-center ">
-                <div className=' w-[360px] sm:w-[500px] md:w-[625px] pt-[80px] sm:pt-[110px]'>
+            <div className="text-[14px] flex flex-row flex-wrap  bg-[#0000ff] min-h-[100vh] pt-10 pb-[90px] sm:pb-[108px] h-full w-full justify-center ">
+                <div className='text-white w-[360px] sm:w-[500px] md:w-[625px] pt-[80px] sm:pt-[110px]'>
                     <div className="font-[helvetica] flex flex-row w-full justify-start text-[24px] font-normal">
                         {title}
                     </div>
@@ -247,7 +243,7 @@ const ListingPage: NextPage = () => {
                         <MarkdownViewer ipfsPath={ipfsPath} />
                     )}
                     <ListingInfo
-                        collectionAddress={process.env.NEXT_PUBLIC_AP_1155_CONTRACT}
+                        collectionAddress={collectionToMintFrom}
                         tokenId={tokenIdToMint}
                     />
                     <div className="w-full flex flex-row mt-[65px] items-center">
@@ -258,10 +254,10 @@ const ListingPage: NextPage = () => {
                         */}
                         <button 
                         disabled={numMinted > 0 || (isSuccess && !mintExistingLoading && !isLoading) ? true : false}
-                        onClick={()=>handleMintInteraction?.()} className={`${isLoading || mintExistingLoading ? "bg-black text-white" : ""} disabled:cursor-default focus:bg-black focus:text-white text-center min-h-[46px] min-x-[186px] h-[46px] w-[186px] text-[14px] border-[1px] border-black font-[helvetica] rounded-[35px]   hover:cursor-pointer`}>
+                        onClick={()=>handleMintInteraction?.()} className={`${isLoading || mintExistingLoading ? "bg-white text-[#0000ff]" : ""} disabled:cursor-default focus:bg-white focus:text-[#0000ff]  text-center min-h-[46px] min-x-[186px] h-[46px] w-[186px] text-[14px] border-[1px] border-white font-[helvetica] rounded-[35px]   hover:cursor-pointer`}>
                             {collectButtonContent} 
                         </button>                    
-                        <div className="ml-[23px] text-black font-IBMPlexMono">
+                        <div className="ml-[23px] font-IBMPlexMono">
                             {totalSupply}&nbsp;minted
                         </div>
                     </div>
@@ -270,7 +266,7 @@ const ListingPage: NextPage = () => {
         )
     } else if (mediaType === 'video') {
         return (
-            <div className="text-[14px] flex flex-col sm:items-center bg-[#FFFFFF] min-h-[100vh] pt-[77px] sm:pt-10 pb-[90px] sm:pb-[108px] h-full w-full sm:justify-center">
+            <div className="text-white text-[14px] flex flex-col sm:items-center bg-[#0000ff] min-h-[100vh] pt-[77px] sm:pt-10 pb-[90px] sm:pb-[108px] h-full w-full sm:justify-center">
                 <div className='sm:pt-[25px] w-full'>
                     <VideoPlayer videoPath={ipfsPath} thumnbnailURL={iamgeURL} />
                     <div className="flex flex-col sm:flex-row  w-full sm:justify-between mt-4 sm:mt-0">
@@ -280,7 +276,7 @@ const ListingPage: NextPage = () => {
                             </div>
                             <div className="flex flex-row font-[helvetica] text-[14px]">
                                 <div className="font-[helvetica]">by&nbsp;</div>
-                                <a href={`https://goerli.etherscan.io/address/${author}`} className="font-[helvetica] hover:underline">
+                                <a href={`https://sepolia.etherscan.io/address/${author}`} className="font-[helvetica] hover:underline">
                                     {shortenAddress(author)}
                                 </a>
                                 &nbsp;{"– " + publicationDate}
@@ -289,20 +285,20 @@ const ListingPage: NextPage = () => {
                                 {description}
                             </div>
                             <ListingInfo
-                                collectionAddress={process.env.NEXT_PUBLIC_AP_1155_CONTRACT}
+                                collectionAddress={collectionToMintFrom}
                                 tokenId={tokenIdToMint}
                             />
                         </div>
                         <div className="px-4 sm:pr-[212px] flex flex-col sm:flex-row flex-wrap items-start">
                             <div className="w-full flex flex-row items-center pt-[16px] mb-[19px]">
-                                <button
-                                    disabled={numMinted > 0 || (isSuccess && !mintExistingLoading && !isLoading) ? true : false}
-                                    onClick={() => handleMintInteraction?.()} className={`${isLoading || mintExistingLoading ? "bg-black text-white" : ""} disabled:cursor-default focus:bg-black focus:text-white text-center min-h-[39px] min-x-[158px] h-[39px] w-[158px] text-[12px] border-[1px] border-black font-[helvetica] rounded-[35px]   hover:cursor-pointer`}>
-                                    {collectButtonContent}
-                                </button>
-                                <div className="ml-[23px] text-black font-IBMPlexMono">
-                                    {totalSupply}&nbsp;minted
-                                </div>
+                            <button 
+                                disabled={numMinted > 0 || (isSuccess && !mintExistingLoading && !isLoading) ? true : false}
+                                onClick={()=>handleMintInteraction?.()} className={`${isLoading || mintExistingLoading ? "bg-white text-[#0000ff]" : ""} disabled:cursor-default focus:bg-white focus:text-[#0000ff]  text-center min-h-[46px] min-x-[186px] h-[46px] w-[186px] text-[14px] border-[1px] border-white font-[helvetica] rounded-[35px]   hover:cursor-pointer`}>
+                                    {collectButtonContent} 
+                            </button>                    
+                            <div className="ml-[23px] font-IBMPlexMono">
+                                {totalSupply}&nbsp;minted
+                            </div>
                             </div>
                         </div>
                     </div>

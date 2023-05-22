@@ -4,23 +4,18 @@ import { erc1155Press_abi } from "../contracts/erc1155Press_abi";
 import { usePrepareContractWrite, useContractWrite, useWaitForTransaction } from "wagmi";
 
 type Props = {
+    collection: string,
     tokenId: string,
     userAddress: string,
     onSuccessCB?: Function
 };
 
-export function useMintExisting({tokenId, userAddress, onSuccessCB }: Props) {
+export function useMintExisting({collection, tokenId, userAddress, onSuccessCB }: Props) {
 
-    console.log("user address: ", userAddress)
-
-    const ap1155Press = process.env.NEXT_PUBLIC_AP_1155_CONTRACT ? process.env.NEXT_PUBLIC_AP_1155_CONTRACT : ""
-
-    console.log(" address: ", ap1155Press)
-
-    const validMint = !tokenId || !userAddress ? false : true 
+    const validMint = !collection || !tokenId || !userAddress ? false : true 
 
     const { config, error } = usePrepareContractWrite({
-        address: ap1155Press,
+        address: collection,
         abi: erc1155Press_abi,
         functionName: "mintExisting",
         args: [

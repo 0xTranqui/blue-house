@@ -17,7 +17,6 @@
     font-size: normal;
 }
 
-
 * {
     font-family: 'Times New Roman', Times, serif;
     line-height: 24.5px;
@@ -52,7 +51,7 @@
     width: 3px;
     height: 3px;
     border-radius: 50%;
-    background-color: #000;
+    background-color: #fff;
     animation: dot-animation 2s infinite;
   }
   

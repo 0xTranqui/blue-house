@@ -66,8 +66,8 @@ export const base = {
 
 export const light = {
   ...base,
-  background: colors.white,
-  text: colors.almostBlack,
+  background: "#0000FF",
+  text: "#FFF",
   code: colors.lightBlack,
   cursor: colors.black,
   divider: colors.greyMid,

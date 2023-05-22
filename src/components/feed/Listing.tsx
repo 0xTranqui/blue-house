@@ -22,7 +22,7 @@ export const Listing = ({index,  metadata, collection}: any) => {
             // TODO: maybe add a loading state instead here?
             <div></div>            
         ) : (
-            <div className="relative flex flex-col w-full text-[15px] border-b-[0.5px] border-black pb-[12px]">
+            <div className="text-white relative flex flex-col w-full text-[15px] border-b-[0.5px] border-white pb-[12px]">
                 <div className="w-[352px] h-full sm:h-[465px] sm:w-full relative mb-[4px]">
                     <Link href={`/${index}`}>
                         <Image

@@ -10,7 +10,7 @@ import { useChannelAdmins } from '../../providers/ChannelAdminProvider';
 export const Connect = () => {
   const { address, logout } = useAuth();
   const userAddress = address ? address : null;
-  const { admin1, admin2 } = useChannelAdmins();
+  const { admin1, admin2, admin3 } = useChannelAdmins();
   const [showDisconnect, setShowDisonnect] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
 
@@ -27,7 +27,7 @@ export const Connect = () => {
     setShowOptions(!showOptions);
   };
 
-  const isAdmin = userAddress === admin1 || userAddress === admin2;
+  const isAdmin = userAddress === admin1 || userAddress === admin2 || userAddress === admin3;
 
   return (
     <ConnectKitButton.Custom>
@@ -35,14 +35,14 @@ export const Connect = () => {
         return (
           <>
             {!isConnected ? (
-              <button className="hover:font-bold" onClick={show}>
+              <button className="text-white hover:font-bold" onClick={show}>
                 {"connect"}
               </button>
             ) : (
               <div className="flex flex-row flex-wrap border-black">
                 {showDisconnect ? (
                   <div className="w-full flex flex-row justify-end">
-                    <button className="hover:font-bold w-fit flex flex-row pb-2" onClick={handleLogout}>
+                    <button className="text-white hover:font-bold w-fit flex flex-row pb-2" onClick={handleLogout}>
                       {"disconnect"}
                     </button>
                   </div>
@@ -54,22 +54,22 @@ export const Connect = () => {
                     <>
                       {showOptions && (
                         <>
-                          <Link href="/create" className="hover:font-bold">
+                          <Link href="/create" className="text-white hover:font-bold">
                             create
                           </Link>
-                          <Link href="/manage" className="hover:font-bold">
+                          <Link href="/manage" className="text-white hover:font-bold">
                             manage
                           </Link>
                         </>
                       )}
                       &nbsp;
-                      <button className="hover:font-bold" onClick={toggleOptions}>
+                      <button className="text-white hover:font-bold" onClick={toggleOptions}>
                         {showOptions ? '–' : '+'}
                       </button>
                       &nbsp;
                     </>
                   )}
-                  <button className="text-black w-fit flex flex-row hover:font-bold" onClick={handleShowDisconnect}>
+                  <button className="text-white w-fit flex flex-row hover:font-bold" onClick={handleShowDisconnect}>
                     {ensName ? ensName : shortenAddress(address)}
                   </button>
                 </div>
