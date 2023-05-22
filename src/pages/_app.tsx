@@ -36,7 +36,7 @@ function App({ Component, pageProps }: AppProps) {
             channelAdmin3={channelAdmin_3}
           >
               <NextHead>
-                <title>seeknoevil</title>
+                <title>blue house</title>
                 <link rel="icon" type="image/png" sizes="24x24" href={favicon} />
               </NextHead>
               <Header />
