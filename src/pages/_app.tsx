@@ -18,8 +18,7 @@ const channel = process.env.NEXT_PUBLIC_AP_721_CURATION_CONTRACT;
 
 const channelAdmin_1 = "0x1F257B12b33b5E88257aCb6772A62394Cc7A061C"
 const channelAdmin_2 = "0x1056bd9C1993A7A85797006cC13aA7B494888F82"
-// const channelAdmin_3 = "0x53D2C7765Bf77E8E2c41A9461FdC1c0F37d09894"
-const channelAdmin_3 = "0x153D2A196dc8f1F6b9Aa87241864B3e4d4FEc170"
+const channelAdmin_3 = "0x53D2C7765Bf77E8E2c41A9461FdC1c0F37d09894"
 
 const favicon = "../public/favicon.png"
 
